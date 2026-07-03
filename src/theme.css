@@ -1,0 +1,173 @@
+/* theme.css — DOMOVINA.ai brand + light/dark dataviz tokeni.
+ * Brand izvor: sms.domovina.ai/webhook/src/views.ts (hrvatska trobojnica).
+ * Dark mode je BIRAN (validirani koraci), ne automatski flip. Vidi CLAUDE.md. */
+
+:root {
+  /* ── brand ── */
+  --brand-navy: #002f6c;
+  --brand-red: #ff0000;
+
+  /* ── surfaces / ink (light) ── */
+  --plane: #f5f7f9;          /* stranica */
+  --surface: #ffffff;        /* kartica / chart surface */
+  --text-primary: #10233f;   /* tamni navy ink */
+  --text-secondary: #5a6570; /* brand muted */
+  --text-muted: #8a95a5;     /* osi/labele */
+  --grid: #e7ebef;           /* hairline grid */
+  --axis: #c9d2db;           /* baseline / os */
+  --border: #e1e5ea;         /* brand border */
+
+  /* ── data marks (light) — validirano protiv #ffffff ── */
+  --series: #002f6c;                       /* primarna data-nijansa (navy) */
+  --series-fill: rgba(0, 47, 108, 0.10);   /* area wash ~10% */
+  --series-hover: #1c4f95;                 /* lift na hoveru */
+  --aggregate: #8a95a5;                    /* "Ostali" (agregat, ne entitet) */
+
+  --radius: 14px;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --plane: #0d0f13;
+    --surface: #16181c;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c0cb;
+    --text-muted: #8891a0;
+    --grid: #262a31;
+    --axis: #363b44;
+    --border: rgba(255, 255, 255, 0.10);
+
+    /* data marks (dark) — validirano protiv #16181c */
+    --series: #4d8be0;
+    --series-fill: rgba(77, 139, 224, 0.16);
+    --series-hover: #6ba0ea;
+    --aggregate: #6b7480;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+/* ── hero ── */
+.hero { margin-bottom: 2.25rem; }
+.brand {
+  display: flex; align-items: center; gap: .6rem;
+  font-weight: 800; letter-spacing: .03em; font-size: 1.15rem;
+  margin-bottom: 1.25rem;
+}
+.brand .accent { color: var(--brand-red); }
+.brand svg { display: block; }
+.hero h1 {
+  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+  line-height: 1.1; margin: 0 0 .5rem; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.hero .sub { color: var(--text-secondary); margin: 0; font-size: 1rem; }
+
+/* ── stat tiles ── */
+.tiles {
+  display: grid; gap: .85rem; margin: 1.75rem 0 2.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+.tile {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.05rem 1.15rem;
+}
+.tile .value {
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem); font-weight: 700;
+  line-height: 1.05; letter-spacing: -0.01em;
+}
+.tile .value .unit {
+  font-size: .8rem; font-weight: 600; color: var(--text-secondary);
+  margin-left: .3rem; letter-spacing: 0;
+}
+.tile .label {
+  margin-top: .3rem; color: var(--text-secondary);
+  font-size: .82rem; font-weight: 500;
+}
+
+/* ── chart cards ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.35rem 1.4rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.card h2 {
+  font-size: 1.12rem; margin: 0 0 .2rem; font-weight: 650;
+  letter-spacing: -0.005em;
+}
+.card .card-sub {
+  color: var(--text-secondary); font-size: .85rem; margin: 0 0 1.15rem;
+}
+
+/* svg text tokeni (osi/labele nose text-tokene, nikad boju serije) */
+svg text { font-family: var(--font-sans); }
+.axis-tick { fill: var(--text-muted); font-size: 11px; }
+.tick-num { font-variant-numeric: tabular-nums; }
+.bar-cat { fill: var(--text-primary); font-size: 12.5px; }
+.bar-val { fill: var(--text-secondary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.grid-line { stroke: var(--grid); stroke-width: 1; shape-rendering: crispEdges; }
+.axis-line { stroke: var(--axis); stroke-width: 1; shape-rendering: crispEdges; }
+
+.bar-mark { fill: var(--series); transition: fill .12s ease; }
+.bar-mark.aggregate { fill: var(--aggregate); }
+.bar-row:hover .bar-mark { fill: var(--series-hover); }
+.bar-row:hover .bar-mark.aggregate { fill: var(--text-secondary); }
+.bar-row { cursor: default; }
+
+.area-fill { fill: var(--series-fill); }
+.area-line { stroke: var(--series); stroke-width: 2; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.area-dot { fill: var(--series); }
+.area-dot-ring { fill: var(--surface); }
+.crosshair { stroke: var(--axis); stroke-width: 1; shape-rendering: crispEdges; }
+
+/* ── tooltip ── */
+.tt {
+  position: fixed; z-index: 20; pointer-events: none;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 9px; padding: .5rem .65rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .14);
+  font-size: .8rem; opacity: 0; transition: opacity .1s ease;
+  max-width: 16rem;
+}
+.tt.on { opacity: 1; }
+.tt .tt-cat { color: var(--text-secondary); font-size: .74rem; margin-bottom: .15rem; }
+.tt .tt-val { font-weight: 700; font-size: .95rem; }
+.tt .tt-val .u { font-weight: 500; color: var(--text-secondary); font-size: .78rem; }
+.tt .tt-row { color: var(--text-secondary); font-size: .74rem; margin-top: .1rem; }
+.tt .tt-row b { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ── footer ── */
+.foot {
+  margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  color: var(--text-secondary); font-size: .82rem;
+  display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; align-items: baseline;
+}
+.foot a { color: var(--brand-navy); text-decoration: none; font-weight: 600; }
+@media (prefers-color-scheme: dark) { .foot a { color: var(--series); } }
+.foot a:hover { text-decoration: underline; }
+
+.err {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem; color: var(--text-secondary);
+}
