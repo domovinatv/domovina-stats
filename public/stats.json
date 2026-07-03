@@ -1,0 +1,929 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-03T09:42:57Z",
+  "source": "local",
+  "totals": {
+    "episodes": 3008,
+    "chunks": 136513,
+    "channels": 44,
+    "hours": 2850,
+    "speakers": 2562,
+    "first_date": "2016-02-18",
+    "last_date": "2026-06-25"
+  },
+  "channels": [
+    {
+      "channel": "nanovoroeni",
+      "episodes": 316,
+      "chunks": 16012,
+      "hours": 299.6
+    },
+    {
+      "channel": "budi_frajer",
+      "episodes": 259,
+      "chunks": 8882,
+      "hours": 132.9
+    },
+    {
+      "channel": "lood_podcast",
+      "episodes": 217,
+      "chunks": 13796,
+      "hours": 330.4
+    },
+    {
+      "channel": "radio_mreznica",
+      "episodes": 206,
+      "chunks": 13125,
+      "hours": 265.7
+    },
+    {
+      "channel": "subclub",
+      "episodes": 167,
+      "chunks": 3538,
+      "hours": 99.2
+    },
+    {
+      "channel": "mreze_rijeci",
+      "episodes": 159,
+      "chunks": 4525,
+      "hours": 74.0
+    },
+    {
+      "channel": "zeljka_markic_i_narod_hr",
+      "episodes": 157,
+      "chunks": 6832,
+      "hours": 156.9
+    },
+    {
+      "channel": "podcast_cuspajz",
+      "episodes": 140,
+      "chunks": 5855,
+      "hours": 136.0
+    },
+    {
+      "channel": "mladi_za_domovinu",
+      "episodes": 131,
+      "chunks": 7256,
+      "hours": 154.8
+    },
+    {
+      "channel": "eho_projekt",
+      "episodes": 101,
+      "chunks": 4222,
+      "hours": 75.6
+    },
+    {
+      "channel": "launched",
+      "episodes": 98,
+      "chunks": 4129,
+      "hours": 122.5
+    },
+    {
+      "channel": "hnb",
+      "episodes": 80,
+      "chunks": 4147,
+      "hours": 89.0
+    },
+    {
+      "channel": "mislav_kolakusic",
+      "episodes": 76,
+      "chunks": 3215,
+      "hours": 55.6
+    },
+    {
+      "channel": "40_dana_za_zivot",
+      "episodes": 76,
+      "chunks": 3821,
+      "hours": 73.5
+    },
+    {
+      "channel": "muzevni_budite",
+      "episodes": 66,
+      "chunks": 2425,
+      "hours": 48.3
+    },
+    {
+      "channel": "iva_kraljevic",
+      "episodes": 60,
+      "chunks": 2846,
+      "hours": 72.3
+    },
+    {
+      "channel": "podcast_bitno_net",
+      "episodes": 59,
+      "chunks": 2141,
+      "hours": 50.4
+    },
+    {
+      "channel": "neuspjeh_prvaka",
+      "episodes": 55,
+      "chunks": 2927,
+      "hours": 63.0
+    },
+    {
+      "channel": "bozja_pobjeda",
+      "episodes": 54,
+      "chunks": 2786,
+      "hours": 86.4
+    },
+    {
+      "channel": "cryptoverse_kripto_caffe",
+      "episodes": 51,
+      "chunks": 2088,
+      "hours": 36.6
+    },
+    {
+      "channel": "franjina_ekonomija",
+      "episodes": 45,
+      "chunks": 1896,
+      "hours": 40.1
+    },
+    {
+      "channel": "hitna_pomoc_za_nemirne",
+      "episodes": 44,
+      "chunks": 1650,
+      "hours": 21.6
+    },
+    {
+      "channel": "kko_hr",
+      "episodes": 43,
+      "chunks": 1790,
+      "hours": 34.8
+    },
+    {
+      "channel": "hercegovina_info",
+      "episodes": 40,
+      "chunks": 1880,
+      "hours": 31.3
+    },
+    {
+      "channel": "glas_poduzetnika",
+      "episodes": 38,
+      "chunks": 1655,
+      "hours": 28.0
+    },
+    {
+      "channel": "bozanstvena_komedija",
+      "episodes": 35,
+      "chunks": 2069,
+      "hours": 33.9
+    },
+    {
+      "channel": "duhovnost_hagio",
+      "episodes": 33,
+      "chunks": 1852,
+      "hours": 25.7
+    },
+    {
+      "channel": "popcast_pavicic",
+      "episodes": 28,
+      "chunks": 1142,
+      "hours": 24.6
+    },
+    {
+      "channel": "rastuci_s_djecom",
+      "episodes": 28,
+      "chunks": 1397,
+      "hours": 37.3
+    },
+    {
+      "channel": "ikra_institut",
+      "episodes": 27,
+      "chunks": 1062,
+      "hours": 18.9
+    },
+    {
+      "channel": "ad_deum_podcast",
+      "episodes": 21,
+      "chunks": 1483,
+      "hours": 36.7
+    },
+    {
+      "channel": "catholic_futurist",
+      "episodes": 17,
+      "chunks": 585,
+      "hours": 12.3
+    },
+    {
+      "channel": "poduzetnistvo_s_povjerenjem",
+      "episodes": 15,
+      "chunks": 681,
+      "hours": 17.0
+    },
+    {
+      "channel": "marijanski_zavjet",
+      "episodes": 12,
+      "chunks": 484,
+      "hours": 9.3
+    },
+    {
+      "channel": "marin_miletic",
+      "episodes": 12,
+      "chunks": 389,
+      "hours": 6.1
+    },
+    {
+      "channel": "merz_institut",
+      "episodes": 7,
+      "chunks": 249,
+      "hours": 6.8
+    },
+    {
+      "channel": "horizonti_liderstva",
+      "episodes": 7,
+      "chunks": 251,
+      "hours": 5.5
+    },
+    {
+      "channel": "founder_talks",
+      "episodes": 7,
+      "chunks": 262,
+      "hours": 5.3
+    },
+    {
+      "channel": "domovina_tv",
+      "episodes": 6,
+      "chunks": 402,
+      "hours": 12.9
+    },
+    {
+      "channel": "podcast_by_niko",
+      "episodes": 5,
+      "chunks": 250,
+      "hours": 4.7
+    },
+    {
+      "channel": "glas_koncila",
+      "episodes": 4,
+      "chunks": 214,
+      "hours": 6.0
+    },
+    {
+      "channel": "hcpi_podcast",
+      "episodes": 3,
+      "chunks": 121,
+      "hours": 3.1
+    },
+    {
+      "channel": "podcast_za_bolju_hrvatsku",
+      "episodes": 2,
+      "chunks": 100,
+      "hours": 3.1
+    },
+    {
+      "channel": "sapere_aude",
+      "episodes": 1,
+      "chunks": 81,
+      "hours": 2.2
+    }
+  ],
+  "timeline": [
+    {
+      "month": "2016-02-01",
+      "episodes": 5,
+      "chunks": 160
+    },
+    {
+      "month": "2016-03-01",
+      "episodes": 1,
+      "chunks": 44
+    },
+    {
+      "month": "2016-06-01",
+      "episodes": 1,
+      "chunks": 60
+    },
+    {
+      "month": "2016-08-01",
+      "episodes": 1,
+      "chunks": 14
+    },
+    {
+      "month": "2016-12-01",
+      "episodes": 1,
+      "chunks": 97
+    },
+    {
+      "month": "2017-02-01",
+      "episodes": 10,
+      "chunks": 567
+    },
+    {
+      "month": "2017-03-01",
+      "episodes": 3,
+      "chunks": 134
+    },
+    {
+      "month": "2017-04-01",
+      "episodes": 2,
+      "chunks": 106
+    },
+    {
+      "month": "2017-05-01",
+      "episodes": 8,
+      "chunks": 227
+    },
+    {
+      "month": "2017-06-01",
+      "episodes": 1,
+      "chunks": 65
+    },
+    {
+      "month": "2017-07-01",
+      "episodes": 4,
+      "chunks": 224
+    },
+    {
+      "month": "2017-08-01",
+      "episodes": 2,
+      "chunks": 129
+    },
+    {
+      "month": "2017-10-01",
+      "episodes": 3,
+      "chunks": 111
+    },
+    {
+      "month": "2017-11-01",
+      "episodes": 2,
+      "chunks": 56
+    },
+    {
+      "month": "2017-12-01",
+      "episodes": 5,
+      "chunks": 647
+    },
+    {
+      "month": "2018-01-01",
+      "episodes": 2,
+      "chunks": 56
+    },
+    {
+      "month": "2018-02-01",
+      "episodes": 1,
+      "chunks": 78
+    },
+    {
+      "month": "2018-03-01",
+      "episodes": 1,
+      "chunks": 26
+    },
+    {
+      "month": "2018-05-01",
+      "episodes": 3,
+      "chunks": 149
+    },
+    {
+      "month": "2018-06-01",
+      "episodes": 4,
+      "chunks": 191
+    },
+    {
+      "month": "2018-07-01",
+      "episodes": 1,
+      "chunks": 26
+    },
+    {
+      "month": "2018-08-01",
+      "episodes": 1,
+      "chunks": 58
+    },
+    {
+      "month": "2018-09-01",
+      "episodes": 2,
+      "chunks": 91
+    },
+    {
+      "month": "2018-10-01",
+      "episodes": 3,
+      "chunks": 124
+    },
+    {
+      "month": "2018-11-01",
+      "episodes": 3,
+      "chunks": 238
+    },
+    {
+      "month": "2018-12-01",
+      "episodes": 15,
+      "chunks": 859
+    },
+    {
+      "month": "2019-01-01",
+      "episodes": 11,
+      "chunks": 334
+    },
+    {
+      "month": "2019-02-01",
+      "episodes": 8,
+      "chunks": 346
+    },
+    {
+      "month": "2019-03-01",
+      "episodes": 4,
+      "chunks": 161
+    },
+    {
+      "month": "2019-04-01",
+      "episodes": 6,
+      "chunks": 275
+    },
+    {
+      "month": "2019-05-01",
+      "episodes": 8,
+      "chunks": 484
+    },
+    {
+      "month": "2019-06-01",
+      "episodes": 2,
+      "chunks": 70
+    },
+    {
+      "month": "2019-09-01",
+      "episodes": 4,
+      "chunks": 136
+    },
+    {
+      "month": "2019-10-01",
+      "episodes": 7,
+      "chunks": 213
+    },
+    {
+      "month": "2019-11-01",
+      "episodes": 9,
+      "chunks": 466
+    },
+    {
+      "month": "2019-12-01",
+      "episodes": 4,
+      "chunks": 188
+    },
+    {
+      "month": "2020-01-01",
+      "episodes": 14,
+      "chunks": 600
+    },
+    {
+      "month": "2020-02-01",
+      "episodes": 13,
+      "chunks": 668
+    },
+    {
+      "month": "2020-03-01",
+      "episodes": 11,
+      "chunks": 410
+    },
+    {
+      "month": "2020-04-01",
+      "episodes": 14,
+      "chunks": 661
+    },
+    {
+      "month": "2020-05-01",
+      "episodes": 14,
+      "chunks": 692
+    },
+    {
+      "month": "2020-06-01",
+      "episodes": 15,
+      "chunks": 607
+    },
+    {
+      "month": "2020-07-01",
+      "episodes": 12,
+      "chunks": 454
+    },
+    {
+      "month": "2020-08-01",
+      "episodes": 10,
+      "chunks": 307
+    },
+    {
+      "month": "2020-09-01",
+      "episodes": 12,
+      "chunks": 487
+    },
+    {
+      "month": "2020-10-01",
+      "episodes": 25,
+      "chunks": 1029
+    },
+    {
+      "month": "2020-11-01",
+      "episodes": 26,
+      "chunks": 867
+    },
+    {
+      "month": "2020-12-01",
+      "episodes": 25,
+      "chunks": 1077
+    },
+    {
+      "month": "2021-01-01",
+      "episodes": 22,
+      "chunks": 911
+    },
+    {
+      "month": "2021-02-01",
+      "episodes": 28,
+      "chunks": 1433
+    },
+    {
+      "month": "2021-03-01",
+      "episodes": 32,
+      "chunks": 1272
+    },
+    {
+      "month": "2021-04-01",
+      "episodes": 28,
+      "chunks": 1219
+    },
+    {
+      "month": "2021-05-01",
+      "episodes": 31,
+      "chunks": 1290
+    },
+    {
+      "month": "2021-06-01",
+      "episodes": 18,
+      "chunks": 828
+    },
+    {
+      "month": "2021-07-01",
+      "episodes": 16,
+      "chunks": 681
+    },
+    {
+      "month": "2021-08-01",
+      "episodes": 5,
+      "chunks": 210
+    },
+    {
+      "month": "2021-09-01",
+      "episodes": 20,
+      "chunks": 779
+    },
+    {
+      "month": "2021-10-01",
+      "episodes": 20,
+      "chunks": 769
+    },
+    {
+      "month": "2021-11-01",
+      "episodes": 30,
+      "chunks": 1302
+    },
+    {
+      "month": "2021-12-01",
+      "episodes": 23,
+      "chunks": 913
+    },
+    {
+      "month": "2022-01-01",
+      "episodes": 20,
+      "chunks": 796
+    },
+    {
+      "month": "2022-02-01",
+      "episodes": 28,
+      "chunks": 1040
+    },
+    {
+      "month": "2022-03-01",
+      "episodes": 27,
+      "chunks": 1030
+    },
+    {
+      "month": "2022-04-01",
+      "episodes": 21,
+      "chunks": 758
+    },
+    {
+      "month": "2022-05-01",
+      "episodes": 21,
+      "chunks": 752
+    },
+    {
+      "month": "2022-06-01",
+      "episodes": 12,
+      "chunks": 495
+    },
+    {
+      "month": "2022-07-01",
+      "episodes": 11,
+      "chunks": 487
+    },
+    {
+      "month": "2022-08-01",
+      "episodes": 4,
+      "chunks": 251
+    },
+    {
+      "month": "2022-09-01",
+      "episodes": 9,
+      "chunks": 317
+    },
+    {
+      "month": "2022-10-01",
+      "episodes": 20,
+      "chunks": 712
+    },
+    {
+      "month": "2022-11-01",
+      "episodes": 35,
+      "chunks": 1271
+    },
+    {
+      "month": "2022-12-01",
+      "episodes": 13,
+      "chunks": 483
+    },
+    {
+      "month": "2023-01-01",
+      "episodes": 21,
+      "chunks": 740
+    },
+    {
+      "month": "2023-02-01",
+      "episodes": 29,
+      "chunks": 1242
+    },
+    {
+      "month": "2023-03-01",
+      "episodes": 39,
+      "chunks": 1931
+    },
+    {
+      "month": "2023-04-01",
+      "episodes": 26,
+      "chunks": 995
+    },
+    {
+      "month": "2023-05-01",
+      "episodes": 33,
+      "chunks": 1330
+    },
+    {
+      "month": "2023-06-01",
+      "episodes": 26,
+      "chunks": 964
+    },
+    {
+      "month": "2023-07-01",
+      "episodes": 13,
+      "chunks": 575
+    },
+    {
+      "month": "2023-08-01",
+      "episodes": 19,
+      "chunks": 691
+    },
+    {
+      "month": "2023-09-01",
+      "episodes": 21,
+      "chunks": 1041
+    },
+    {
+      "month": "2023-10-01",
+      "episodes": 31,
+      "chunks": 1626
+    },
+    {
+      "month": "2023-11-01",
+      "episodes": 41,
+      "chunks": 1736
+    },
+    {
+      "month": "2023-12-01",
+      "episodes": 32,
+      "chunks": 1282
+    },
+    {
+      "month": "2024-01-01",
+      "episodes": 33,
+      "chunks": 1518
+    },
+    {
+      "month": "2024-02-01",
+      "episodes": 47,
+      "chunks": 2034
+    },
+    {
+      "month": "2024-03-01",
+      "episodes": 58,
+      "chunks": 2630
+    },
+    {
+      "month": "2024-04-01",
+      "episodes": 43,
+      "chunks": 1875
+    },
+    {
+      "month": "2024-05-01",
+      "episodes": 48,
+      "chunks": 2274
+    },
+    {
+      "month": "2024-06-01",
+      "episodes": 40,
+      "chunks": 2013
+    },
+    {
+      "month": "2024-07-01",
+      "episodes": 47,
+      "chunks": 1960
+    },
+    {
+      "month": "2024-08-01",
+      "episodes": 18,
+      "chunks": 714
+    },
+    {
+      "month": "2024-09-01",
+      "episodes": 31,
+      "chunks": 1501
+    },
+    {
+      "month": "2024-10-01",
+      "episodes": 63,
+      "chunks": 2910
+    },
+    {
+      "month": "2024-11-01",
+      "episodes": 66,
+      "chunks": 3185
+    },
+    {
+      "month": "2024-12-01",
+      "episodes": 66,
+      "chunks": 3425
+    },
+    {
+      "month": "2025-01-01",
+      "episodes": 72,
+      "chunks": 3527
+    },
+    {
+      "month": "2025-02-01",
+      "episodes": 78,
+      "chunks": 3751
+    },
+    {
+      "month": "2025-03-01",
+      "episodes": 86,
+      "chunks": 4021
+    },
+    {
+      "month": "2025-04-01",
+      "episodes": 69,
+      "chunks": 3361
+    },
+    {
+      "month": "2025-05-01",
+      "episodes": 70,
+      "chunks": 3178
+    },
+    {
+      "month": "2025-06-01",
+      "episodes": 55,
+      "chunks": 2739
+    },
+    {
+      "month": "2025-07-01",
+      "episodes": 39,
+      "chunks": 2024
+    },
+    {
+      "month": "2025-08-01",
+      "episodes": 29,
+      "chunks": 1296
+    },
+    {
+      "month": "2025-09-01",
+      "episodes": 48,
+      "chunks": 2242
+    },
+    {
+      "month": "2025-10-01",
+      "episodes": 80,
+      "chunks": 3869
+    },
+    {
+      "month": "2025-11-01",
+      "episodes": 88,
+      "chunks": 4122
+    },
+    {
+      "month": "2025-12-01",
+      "episodes": 104,
+      "chunks": 5104
+    },
+    {
+      "month": "2026-01-01",
+      "episodes": 90,
+      "chunks": 4340
+    },
+    {
+      "month": "2026-02-01",
+      "episodes": 84,
+      "chunks": 4092
+    },
+    {
+      "month": "2026-03-01",
+      "episodes": 92,
+      "chunks": 4579
+    },
+    {
+      "month": "2026-04-01",
+      "episodes": 73,
+      "chunks": 3377
+    },
+    {
+      "month": "2026-05-01",
+      "episodes": 76,
+      "chunks": 3532
+    },
+    {
+      "month": "2026-06-01",
+      "episodes": 51,
+      "chunks": 2099
+    }
+  ],
+  "top_speakers": [
+    {
+      "name": "fra Stjepan Brčina",
+      "episodes": 178,
+      "chunks": 2814
+    },
+    {
+      "name": "Željka Markić",
+      "episodes": 155,
+      "chunks": 3202
+    },
+    {
+      "name": "Vinko Mihaljević",
+      "episodes": 106,
+      "chunks": 3032
+    },
+    {
+      "name": "Charlie Chapman",
+      "episodes": 96,
+      "chunks": 2258
+    },
+    {
+      "name": "David Bernard",
+      "episodes": 80,
+      "chunks": 868
+    },
+    {
+      "name": "Stanko Stojić",
+      "episodes": 79,
+      "chunks": 1192
+    },
+    {
+      "name": "fra Ante Vučković",
+      "episodes": 72,
+      "chunks": 1207
+    },
+    {
+      "name": "Mislav Kolakušić",
+      "episodes": 66,
+      "chunks": 1424
+    },
+    {
+      "name": "David Barnard",
+      "episodes": 64,
+      "chunks": 628
+    },
+    {
+      "name": "Iva Kraljević",
+      "episodes": 63,
+      "chunks": 1374
+    },
+    {
+      "name": "Matija Ricov",
+      "episodes": 62,
+      "chunks": 1872
+    },
+    {
+      "name": "Gabrijel Lukić",
+      "episodes": 59,
+      "chunks": 1359
+    },
+    {
+      "name": "fra Domagoj Runje",
+      "episodes": 54,
+      "chunks": 648
+    },
+    {
+      "name": "Katarina Bukša",
+      "episodes": 36,
+      "chunks": 579
+    },
+    {
+      "name": "Marin Sladić",
+      "episodes": 35,
+      "chunks": 938
+    }
+  ]
+}
