@@ -77,6 +77,7 @@ function footer(data: StatsJson): HTMLElement {
   const mcp = h("a", { href: "https://mcp.domovina.ai" }, "mcp.domovina.ai");
   f.append(
     h("span", {}, "Semantički korpus hrvatskih podcasta."),
+    h("a", { href: "/map" }, "Semantička mapa korpusa →"),
     (() => { const s = h("span", {}); s.append("MCP pristup: ", mcp); return s; })(),
   );
   if (data.totals?.first_date && data.totals?.last_date) {

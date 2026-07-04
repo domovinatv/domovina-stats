@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-03T09:42:57Z",
-  "source": "local",
+  "generated_at": "2026-07-04T07:00:52Z",
+  "source": "cloud",
   "totals": {
     "episodes": 3008,
-    "chunks": 136513,
+    "chunks": 136954,
     "channels": 44,
-    "hours": 2850,
+    "hours": 2853,
     "speakers": 2562,
     "first_date": "2016-02-18",
     "last_date": "2026-06-25"
@@ -15,20 +15,20 @@
     {
       "channel": "nanovoroeni",
       "episodes": 316,
-      "chunks": 16012,
-      "hours": 299.6
+      "chunks": 16118,
+      "hours": 301.6
     },
     {
       "channel": "budi_frajer",
       "episodes": 259,
-      "chunks": 8882,
-      "hours": 132.9
+      "chunks": 8964,
+      "hours": 134.0
     },
     {
       "channel": "lood_podcast",
       "episodes": 217,
-      "chunks": 13796,
-      "hours": 330.4
+      "chunks": 13852,
+      "hours": 331.7
     },
     {
       "channel": "radio_mreznica",
@@ -45,44 +45,44 @@
     {
       "channel": "mreze_rijeci",
       "episodes": 159,
-      "chunks": 4525,
-      "hours": 74.0
+      "chunks": 4545,
+      "hours": 74.5
     },
     {
       "channel": "zeljka_markic_i_narod_hr",
       "episodes": 157,
-      "chunks": 6832,
-      "hours": 156.9
+      "chunks": 6854,
+      "hours": 157.8
     },
     {
       "channel": "podcast_cuspajz",
       "episodes": 140,
-      "chunks": 5855,
-      "hours": 136.0
+      "chunks": 5947,
+      "hours": 138.6
     },
     {
       "channel": "mladi_za_domovinu",
       "episodes": 131,
-      "chunks": 7256,
-      "hours": 154.8
+      "chunks": 7302,
+      "hours": 156.1
     },
     {
       "channel": "eho_projekt",
       "episodes": 101,
-      "chunks": 4222,
-      "hours": 75.6
+      "chunks": 4312,
+      "hours": 77.4
     },
     {
       "channel": "launched",
       "episodes": 98,
-      "chunks": 4129,
-      "hours": 122.5
+      "chunks": 3896,
+      "hours": 110.1
     },
     {
       "channel": "hnb",
       "episodes": 80,
-      "chunks": 4147,
-      "hours": 89.0
+      "chunks": 4166,
+      "hours": 89.7
     },
     {
       "channel": "mislav_kolakusic",
@@ -93,8 +93,8 @@
     {
       "channel": "40_dana_za_zivot",
       "episodes": 76,
-      "chunks": 3821,
-      "hours": 73.5
+      "chunks": 3859,
+      "hours": 74.7
     },
     {
       "channel": "muzevni_budite",
@@ -123,14 +123,14 @@
     {
       "channel": "bozja_pobjeda",
       "episodes": 54,
-      "chunks": 2786,
-      "hours": 86.4
+      "chunks": 2859,
+      "hours": 88.4
     },
     {
       "channel": "cryptoverse_kripto_caffe",
       "episodes": 51,
-      "chunks": 2088,
-      "hours": 36.6
+      "chunks": 2046,
+      "hours": 35.8
     },
     {
       "channel": "franjina_ekonomija",
@@ -147,8 +147,8 @@
     {
       "channel": "kko_hr",
       "episodes": 43,
-      "chunks": 1790,
-      "hours": 34.8
+      "chunks": 1816,
+      "hours": 35.1
     },
     {
       "channel": "hercegovina_info",
@@ -177,8 +177,8 @@
     {
       "channel": "popcast_pavicic",
       "episodes": 28,
-      "chunks": 1142,
-      "hours": 24.6
+      "chunks": 1160,
+      "hours": 25.0
     },
     {
       "channel": "rastuci_s_djecom",
@@ -207,8 +207,8 @@
     {
       "channel": "poduzetnistvo_s_povjerenjem",
       "episodes": 15,
-      "chunks": 681,
-      "hours": 17.0
+      "chunks": 709,
+      "hours": 17.6
     },
     {
       "channel": "marijanski_zavjet",
@@ -291,7 +291,7 @@
     {
       "month": "2016-06-01",
       "episodes": 1,
-      "chunks": 60
+      "chunks": 120
     },
     {
       "month": "2016-08-01",
@@ -306,7 +306,7 @@
     {
       "month": "2017-02-01",
       "episodes": 10,
-      "chunks": 567
+      "chunks": 586
     },
     {
       "month": "2017-03-01",
@@ -461,7 +461,7 @@
     {
       "month": "2020-01-01",
       "episodes": 14,
-      "chunks": 600
+      "chunks": 510
     },
     {
       "month": "2020-02-01",
@@ -651,7 +651,7 @@
     {
       "month": "2023-03-01",
       "episodes": 39,
-      "chunks": 1931
+      "chunks": 1997
     },
     {
       "month": "2023-04-01",
@@ -681,12 +681,12 @@
     {
       "month": "2023-09-01",
       "episodes": 21,
-      "chunks": 1041
+      "chunks": 898
     },
     {
       "month": "2023-10-01",
       "episodes": 31,
-      "chunks": 1626
+      "chunks": 1648
     },
     {
       "month": "2023-11-01",
@@ -706,7 +706,7 @@
     {
       "month": "2024-02-01",
       "episodes": 47,
-      "chunks": 2034
+      "chunks": 2170
     },
     {
       "month": "2024-03-01",
@@ -716,17 +716,17 @@
     {
       "month": "2024-04-01",
       "episodes": 43,
-      "chunks": 1875
+      "chunks": 1961
     },
     {
       "month": "2024-05-01",
       "episodes": 48,
-      "chunks": 2274
+      "chunks": 2300
     },
     {
       "month": "2024-06-01",
       "episodes": 40,
-      "chunks": 2013
+      "chunks": 2033
     },
     {
       "month": "2024-07-01",
@@ -776,12 +776,12 @@
     {
       "month": "2025-04-01",
       "episodes": 69,
-      "chunks": 3361
+      "chunks": 3319
     },
     {
       "month": "2025-05-01",
       "episodes": 70,
-      "chunks": 3178
+      "chunks": 3216
     },
     {
       "month": "2025-06-01",
@@ -791,7 +791,7 @@
     {
       "month": "2025-07-01",
       "episodes": 39,
-      "chunks": 2024
+      "chunks": 2080
     },
     {
       "month": "2025-08-01",
@@ -816,12 +816,12 @@
     {
       "month": "2025-12-01",
       "episodes": 104,
-      "chunks": 5104
+      "chunks": 5122
     },
     {
       "month": "2026-01-01",
       "episodes": 90,
-      "chunks": 4340
+      "chunks": 4372
     },
     {
       "month": "2026-02-01",
@@ -831,7 +831,7 @@
     {
       "month": "2026-03-01",
       "episodes": 92,
-      "chunks": 4579
+      "chunks": 4688
     },
     {
       "month": "2026-04-01",
@@ -841,7 +841,7 @@
     {
       "month": "2026-05-01",
       "episodes": 76,
-      "chunks": 3532
+      "chunks": 3560
     },
     {
       "month": "2026-06-01",
@@ -853,22 +853,22 @@
     {
       "name": "fra Stjepan Brčina",
       "episodes": 178,
-      "chunks": 2814
+      "chunks": 2855
     },
     {
       "name": "Željka Markić",
       "episodes": 155,
-      "chunks": 3202
+      "chunks": 3214
     },
     {
       "name": "Vinko Mihaljević",
       "episodes": 106,
-      "chunks": 3032
+      "chunks": 3054
     },
     {
       "name": "Charlie Chapman",
       "episodes": 96,
-      "chunks": 2258
+      "chunks": 2051
     },
     {
       "name": "David Bernard",
@@ -908,7 +908,7 @@
     {
       "name": "Gabrijel Lukić",
       "episodes": 59,
-      "chunks": 1359
+      "chunks": 1382
     },
     {
       "name": "fra Domagoj Runje",
@@ -923,7 +923,7 @@
     {
       "name": "Marin Sladić",
       "episodes": 35,
-      "chunks": 938
+      "chunks": 972
     }
   ]
 }

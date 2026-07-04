@@ -105,6 +105,25 @@ ORDER BY month
 FORMAT JSON;
 ```
 
+## Vector map (Razina 2 — `/map`)
+
+Drugi artefakt istog producera (`domovina-rag/scripts/sync-vector-map.sh` →
+`emit_vector_map.py`, dedicated venv s umap-learn): UMAP 2D projekcija SVIH
+chunk embeddinga iz LOKALNOG CH-a. Frontend `/map` (src/map.ts, WebGL2) čita:
+
+- **`public/vector-map.bin`** — N × 4 × uint16 little-endian po točki:
+  `x`, `y` (kvantizirano na [0,65535], očuvan aspect ratio),
+  `ep_idx` (indeks u `episodes` iz meta JSON-a), `t_sec` (start isječka,
+  za player deep-link `https://domovina.ai/v/{id}/t/{sec}`).
+- **`public/vector-map.json`** — `{schema_version: 1, generated_at, source,
+  points, source_rows, channels: [ime… po chunkovima DESC],
+  episodes: [[youtube_id, channel_idx, title, date]…]}`.
+  `source_rows` je sirovi CH count — producer po njemu preskače UMAP kad nema
+  novih chunkova. Boje: prvih 8 `channels` = kategorički slotovi, ostali agregat.
+
+Frontend graceful degradira: ako fajlovi ne postoje (404), `/map` prikaže
+poruku umjesto mape; dashboard `/` ne ovisi o njima.
+
 ## Verzioniranje
 
 Ako mijenjaš shape → bump `stats.json` (dodaj `"schema_version": 1`), pa update

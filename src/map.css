@@ -1,0 +1,111 @@
+/* map.css — stilovi stranice /map (vektorska mapa). Nadogradnja theme.css-a:
+ * kategorička paleta (8 slotova + agregat) validirana dataviz skriptom protiv
+ * OBJE površine (#ffffff / #16181c); light i dark su BIRANI koraci. */
+
+:root {
+  --cat-1: #2a78d6;
+  --cat-2: #1baf7a;
+  --cat-3: #eda100;
+  --cat-4: #008300;
+  --cat-5: #4a3aa7;
+  --cat-6: #e34948;
+  --cat-7: #e87ba4;
+  --cat-8: #eb6834;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cat-1: #3987e5;
+    --cat-2: #199e70;
+    --cat-3: #c98500;
+    --cat-4: #008300;
+    --cat-5: #9085e9;
+    --cat-6: #e66767;
+    --cat-7: #d55181;
+    --cat-8: #d95926;
+  }
+}
+
+/* ── povratak na dashboard ── */
+.backlink {
+  display: inline-block; margin-bottom: 1rem;
+  color: var(--text-secondary); text-decoration: none; font-size: .85rem;
+  font-weight: 600;
+}
+.backlink:hover { color: var(--text-primary); }
+
+/* ── legenda (chip = toggle filter; label je vidljiv — identitet nikad samo bojom) ── */
+.legend {
+  display: flex; flex-wrap: wrap; gap: .4rem .45rem; margin: 0 0 .9rem;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  border: 1px solid var(--border); border-radius: 999px;
+  background: none; color: var(--text-primary);
+  font: 500 .78rem var(--font-sans); padding: .28rem .7rem .28rem .5rem;
+  cursor: pointer; transition: background .12s ease, opacity .12s ease;
+}
+.chip:hover { background: var(--grid); }
+.chip .sw {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--c, var(--aggregate)); flex: none;
+}
+.chip .n { color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.legend.filtered .chip:not(.on) { opacity: .45; }
+.chip.on { border-color: var(--text-secondary); background: var(--grid); }
+
+/* ── canvas ── */
+.map-stage {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: var(--surface);
+  height: min(72vh, 46rem); min-height: 22rem;
+}
+.map-stage canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; touch-action: none; cursor: crosshair;
+}
+.map-stage canvas.pt { cursor: pointer; }
+.map-stage canvas.drag { cursor: grabbing; }
+
+/* prsten oko hoverane točke (marker je HTML — jeftinije od WebGL passa) */
+.pick-ring {
+  position: absolute; width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--text-primary); pointer-events: none;
+  transform: translate(-50%, -50%); display: none;
+  box-shadow: 0 0 0 1.5px var(--surface) inset, 0 0 0 1.5px var(--surface);
+}
+.map-stage .hint {
+  position: absolute; right: .6rem; bottom: .5rem; pointer-events: none;
+  color: var(--text-muted); font-size: .7rem;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  padding: .15rem .5rem; border-radius: 6px;
+}
+
+/* ── snackbar (touch: tap na točku → naslov + link) ── */
+.snack {
+  position: absolute; left: .6rem; right: .6rem; bottom: .6rem; z-index: 2;
+  display: none; align-items: center; gap: .75rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: .6rem .75rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
+}
+.snack.on { display: flex; }
+.snack-info { min-width: 0; flex: 1; }
+.snack-title {
+  font-weight: 600; font-size: .85rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.snack-sub { color: var(--text-secondary); font-size: .74rem; }
+.snack-open {
+  font-weight: 700; font-size: .85rem; white-space: nowrap;
+  color: var(--brand-navy); text-decoration: none;
+}
+@media (prefers-color-scheme: dark) { .snack-open { color: var(--series); } }
+.snack-open:hover { text-decoration: underline; }
+.snack-x {
+  background: none; border: none; color: var(--text-muted);
+  font: 400 1.15rem/1 var(--font-sans); cursor: pointer; padding: .1rem .35rem;
+}
+.snack-x:hover { color: var(--text-primary); }
+
+.map-note { color: var(--text-muted); font-size: .76rem; margin: .8rem 0 0; }
