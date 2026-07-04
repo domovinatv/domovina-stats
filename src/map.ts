@@ -29,6 +29,8 @@ import { num, compact, shortDate, generatedLabel } from "./format.ts";
 
 interface Cluster {
   label: string;
+  /** razina: 0 = glavna tema (uvijek kandidat), 1 = podtema (tek na dubljem zoomu) */
+  l?: number;
   x: number; y: number;
   x3: number; y3: number; z3: number;
   n: number;
@@ -187,8 +189,11 @@ async function init(): Promise<void> {
     return;
   }
   const n = raw.length >> 2;
-  // label može biti "" (LLM nedostupan pri generiranju) — takve regije preskačemo
-  const clusters = (meta.clusters ?? []).filter((c) => c.label);
+  // label može biti "" (LLM nedostupan pri generiranju) — takve regije preskačemo.
+  // Prioritet za prikaz: glavne teme (l=0) prije podtema, unutar razine veći klasteri.
+  const clusters = (meta.clusters ?? [])
+    .filter((c) => c.label)
+    .sort((a, b) => (a.l ?? 0) - (b.l ?? 0) || b.n - a.n);
 
   sub.textContent =
     `${num(n)} isječaka transkripata kao točke — UMAP projekcija 1024-dimenzionalnih ` +
@@ -253,7 +258,7 @@ async function init(): Promise<void> {
   canvas.setAttribute("aria-label", `Točkasta mapa ${num(n)} isječaka korpusa, grupirano po semantičkoj sličnosti`);
   const labelsWrap = h("div", { class: "clabels", "aria-hidden": "true" });
   const labelEls = clusters.map((c) => {
-    const el = h("div", { class: "clabel" }, c.label);
+    const el = h("div", { class: (c.l ?? 0) > 0 ? "clabel l1" : "clabel" }, c.label);
     labelsWrap.appendChild(el);
     return el;
   });
@@ -269,8 +274,8 @@ async function init(): Promise<void> {
 
   const setHint = () => {
     hint.textContent = mode === "2d"
-      ? "kotačić = zoom · povlačenje = pomak · klik na točku = video"
-      : "kotačić = zoom · povlačenje = rotacija · klik na točku = video";
+      ? "kotačić = zoom · povlačenje = pomak · klik na točku = video · dvoklik = reset"
+      : "kotačić = zoom · povlačenje = rotacija · klik na točku = video · dvoklik = reset";
   };
   setHint();
 
@@ -401,13 +406,20 @@ async function init(): Promise<void> {
   }
 
   // ── labele klastera (zoom-ovisno, greedy anti-overlap) ──
+  // Budžet troše SAMO labele u viewportu → zoom u regiju automatski otkriva
+  // dublje/finije nazive te regije (progressive disclosure kao karta grada).
+  // Podteme (l=1) su uz to gate-ane minimalnim zoomom da default pogled ostane čist.
+  const FINE_ZOOM = 1.6;
   function positionLabels(): void {
     if (!clusters.length) return;
     const zoom = mode === "2d" ? view.zoom : view3.zoom;
-    const maxK = Math.min(clusters.length, Math.round(7 * Math.pow(zoom, 1.2)) + 5);
-    const placed: [number, number][] = [];
+    const budget = Math.round(8 * Math.pow(zoom, 1.3)) + 4;
+    const placed: [number, number, number][] = []; // x, y, lvl
+    const usedText = new Set<string>();
+    let count = 0;
     clusters.forEach((c, ci) => {
       const el = labelEls[ci];
+      const lvl = c.l ?? 0;
       let x: number, y: number, depth = 1;
       if (mode === "2d") {
         [x, y] = screenAt(c.x / 65535, c.y / 65535);
@@ -416,28 +428,38 @@ async function init(): Promise<void> {
         x = px; y = py;
         depth = 0.35 + 0.65 * Math.min(1, Math.max(0, (pz + 0.55) / 1.1));
       }
-      let ok = ci < maxK && x > 10 && x < W - 10 && y > 14 && y < H - 14;
+      let ok = count < budget
+        && (lvl === 0 || zoom >= FINE_ZOOM)
+        && x > 10 && x < W - 10 && y > 14 && y < H - 14
+        && !usedText.has(c.label);
       if (ok) {
+        const padX = lvl === 0 ? 110 : 84;
         for (const [ox, oy] of placed) {
-          if (Math.abs(x - ox) < 110 && Math.abs(y - oy) < 26) { ok = false; break; }
+          if (Math.abs(x - ox) < padX && Math.abs(y - oy) < (lvl === 0 ? 26 : 20)) { ok = false; break; }
         }
       }
       if (!ok) { el.style.opacity = "0"; return; }
-      placed.push([x, y]);
-      el.style.opacity = String(mode === "2d" ? 0.9 : 0.9 * depth);
+      placed.push([x, y, lvl]);
+      usedText.add(c.label);
+      count++;
+      const base = lvl === 0 ? 0.9 : 0.72;
+      el.style.opacity = String(mode === "2d" ? base : base * depth);
       el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px) translate(-50%, -50%)`;
-      el.style.fontSize = `${Math.min(15, 10.5 + Math.log2(1 + c.n / 1500))}px`;
+      el.style.fontSize = lvl === 0
+        ? `${Math.min(15, 10.5 + Math.log2(1 + c.n / 1500))}px`
+        : `${Math.min(12, 9.5 + Math.log2(1 + c.n / 1500))}px`;
     });
   }
 
-  const ro = new ResizeObserver(() => {
+  const sizeCanvas = (): void => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = stage.clientWidth; H = stage.clientHeight;
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     requestRender();
-  });
-  ro.observe(stage);
+  };
+  new ResizeObserver(sizeCanvas).observe(stage);
+  sizeCanvas(); // eksplicitni inicijalni pass — ne ovisi o RO initial delivery timingu
 
   // ── mode switch ──
   async function setMode(m2: "2d" | "3d"): Promise<void> {
@@ -473,6 +495,31 @@ async function init(): Promise<void> {
   }
   btn2d.addEventListener("click", () => { void setMode("2d"); });
   btn3d.addEventListener("click", () => { void setMode("3d"); });
+
+  // ── chapter naslovi (lazy shardovi; vidi emit_vector_map.py) ──
+  const NSHARD = 64;
+  const chapShards = new Map<number, Promise<Record<string, [number, string][]>>>();
+  function chapterFor(i: number): Promise<string> {
+    const ep = raw[i * 4 + 2], t = raw[i * 4 + 3];
+    const sh = ep % NSHARD;
+    let p = chapShards.get(sh);
+    if (!p) {
+      p = fetch(`/vector-map-chap-${String(sh).padStart(2, "0")}.json`)
+        .then((r) => (r.ok ? r.json() : {}))
+        .catch(() => ({}));
+      chapShards.set(sh, p);
+    }
+    return p.then((m) => {
+      const lst = m[String(ep)];
+      if (!lst?.length) return "";
+      let best = "", bd = Infinity;
+      for (const [tt, title] of lst) {
+        const d = Math.abs(tt - t);
+        if (d < bd) { bd = d; best = title; }
+      }
+      return bd <= 120 ? best : ""; // isječak mora biti blizu (2 min) da naslov ima smisla
+    });
+  }
 
   // ── picking ──
   let picked = -1;
@@ -527,10 +574,17 @@ async function init(): Promise<void> {
     positionRing();
     if (i < 0) { hideTooltip(); return; }
     const ep = meta.episodes[raw[i * 4 + 2]];
-    showTooltip(clientX, clientY, ep[3] ? shortDate(ep[3]) : "", ep[2] || ep[0], "", [
-      { label: "Kanal", value: meta.channels[ep[1]] ?? "?" },
-      { label: "Trenutak", value: fmtT(raw[i * 4 + 3]) },
-    ]);
+    const show = (chap: string) => {
+      const rows = chap ? [{ label: "Tema", value: chap }] : [];
+      rows.push(
+        { label: "Kanal", value: meta.channels[ep[1]] ?? "?" },
+        { label: "Trenutak", value: fmtT(raw[i * 4 + 3]) },
+      );
+      showTooltip(clientX, clientY, ep[3] ? shortDate(ep[3]) : "", ep[2] || ep[0], "", rows);
+    };
+    show("");
+    // naslov isječka stiže async iz sharda — osvježi tooltip ako je isti pick još živ
+    void chapterFor(i).then((chap) => { if (picked === i && chap) show(chap); });
   }
 
   // ── snackbar (touch UX: tap → naslov + link, umjesto hover tooltipa) ──
@@ -546,8 +600,10 @@ async function init(): Promise<void> {
     const t = raw[i * 4 + 3];
     snack.replaceChildren();
     const info = h("div", { class: "snack-info" });
+    const chapEl = h("div", { class: "snack-chap" });
     info.append(
       h("div", { class: "snack-title" }, ep[2] || ep[0]),
+      chapEl,
       h("div", { class: "snack-sub" },
         [meta.channels[ep[1]] ?? "?", ep[3] ? shortDate(ep[3]) : "", fmtT(t)].filter(Boolean).join(" · ")),
     );
@@ -558,6 +614,7 @@ async function init(): Promise<void> {
     close.addEventListener("click", hideSnack);
     snack.append(info, open, close);
     snack.classList.add("on");
+    void chapterFor(i).then((chap) => { if (picked === i && chap) chapEl.textContent = chap; });
   }
 
   // ── interakcija: drag pan/rotacija, pinch/wheel zoom, klik ──
@@ -643,6 +700,17 @@ async function init(): Promise<void> {
     e.preventDefault();
     zoomAt(e.offsetX, e.offsetY, Math.exp(-e.deltaY * 0.0016));
   }, { passive: false });
+
+  // dvoklik = reset pogleda (lako se izgubiti u praznom prostoru na dubokom zoomu)
+  canvas.addEventListener("dblclick", () => {
+    if (mode === "2d") {
+      view.cx = 0.5; view.cy = 0.5; view.zoom = 0.94;
+    } else {
+      view3.yaw = 0.6; view3.pitch = -0.35; view3.zoom = 0.86;
+      autoRotate = true;
+    }
+    requestRender();
+  });
 }
 
 init().catch((e) => {

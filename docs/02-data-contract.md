@@ -129,6 +129,12 @@ chunk embeddinga iz LOKALNOG CH-a. Frontend `/map` (src/map.ts, WebGL2) čita:
   youtube_id otisak za nasljeđivanje labela između runova kad LLM nije dostupan.
 - **`public/vector-map-titles.json`** — debug/ručno-imenovanje sidecar: po
   klasteru top naslovi epizoda (nije ga nužno servirati, ali je bezopasan).
+- **`public/vector-map-chap-{00..63}.json`** — chapter shardovi za tooltip:
+  `{ "<ep_idx>": [[t_sec, naslov_isječka]…] }`, shard = `ep_idx % 64`. Naslov
+  isječka je prva linija chunk texta (`Tema:`/`Naslov:` prefiks, do 90 znakova).
+  Frontend sharda lazy-fetcha tek na hover/tap i kešira; ~160 kB po shardu.
+  `clusters[].l`: 0 = glavna tema, 1 = podtema (frontend je otkriva tek na
+  zoomu ≥ 1.6, viewport-aware budžet).
 
 Frontend graceful degradira: ako fajlovi ne postoje (404), `/map` prikaže
 poruku umjesto mape; dashboard `/` ne ovisi o njima.

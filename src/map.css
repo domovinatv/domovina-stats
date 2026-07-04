@@ -123,6 +123,11 @@
   font-weight: 600; font-size: .85rem;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.snack-chap {
+  color: var(--text-secondary); font-size: .78rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.snack-chap:empty { display: none; }
 .snack-sub { color: var(--text-secondary); font-size: .74rem; }
 .snack-open {
   font-weight: 700; font-size: .85rem; white-space: nowrap;
