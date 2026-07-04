@@ -156,26 +156,35 @@ function buildGrid(px: Float32Array, n: number) {
 }
 
 // ── stranica ─────────────────────────────────────────────────────────────────
-function shell(): { card: HTMLElement; sub: HTMLElement } {
-  const wrap = h("div", { class: "wrap" });
-  const hero = h("header", { class: "hero" });
-  hero.appendChild(h("a", { class: "backlink", href: "/" }, "← DOMOVINA.ai u brojkama"));
-  hero.appendChild(h("h1", {}, "Semantička mapa korpusa"));
-  const sub = h("p", { class: "sub" }, "Učitavam mapu…");
-  hero.appendChild(sub);
-  const card = h("section", { class: "card" });
-  wrap.append(hero, card);
-  app.replaceChildren(wrap);
-  return { card, sub };
+// Immersive full-viewport shell (kao gis.domovina.ai): kompaktni topbar +
+// mapa od ruba do ruba. `stage` je host za canvas i sve plutajuće ploče.
+function shell(): { stage: HTMLElement; sub: HTMLElement } {
+  const appEl = h("div", { class: "map-app" });
+
+  const topbar = h("header", { class: "map-topbar" });
+  const back = h("a", { class: "topbar-back", href: "/", "aria-label": "Natrag na DOMOVINA.ai u brojkama", title: "Natrag na dashboard" }, "←");
+  const brand = h("span", { class: "topbar-brand" });
+  brand.append(document.createTextNode("DOMOVINA"), h("span", { class: "accent" }, ".ai"));
+  const sep = h("span", { class: "topbar-sep", "aria-hidden": "true" }, "·");
+  const title = h("h1", { class: "topbar-title" }, "Semantička mapa korpusa");
+  const sub = h("p", { class: "topbar-sub" }, "Učitavam mapu…");
+  topbar.append(back, brand, sep, title, sub);
+
+  const stage = h("div", { class: "map-stage" });
+  appEl.append(topbar, stage);
+  app.replaceChildren(appEl);
+  return { stage, sub };
 }
 
-function fail(card: HTMLElement, sub: HTMLElement, msg: string): void {
+function fail(stage: HTMLElement, sub: HTMLElement, msg: string): void {
   sub.textContent = "Mapa trenutno nije dostupna.";
-  card.replaceChildren(h("div", { class: "err" }, msg));
+  const center = h("div", { class: "stage-center" });
+  center.appendChild(h("div", { class: "err" }, msg));
+  stage.replaceChildren(center);
 }
 
 async function init(): Promise<void> {
-  const { card, sub } = shell();
+  const { stage, sub } = shell();
 
   let meta: MapMeta;
   let raw: Uint16Array;
@@ -185,7 +194,7 @@ async function init(): Promise<void> {
     meta = await mRes.json();
     raw = new Uint16Array(await bRes.arrayBuffer());
   } catch (e) {
-    fail(card, sub, `Snapshot mape još nije generiran (${e instanceof Error ? e.message : e}).`);
+    fail(stage, sub, `Snapshot mape još nije generiran (${e instanceof Error ? e.message : e}).`);
     return;
   }
   const n = raw.length >> 2;
@@ -195,7 +204,9 @@ async function init(): Promise<void> {
     .filter((c) => c.label)
     .sort((a, b) => (a.l ?? 0) - (b.l ?? 0) || b.n - a.n);
 
-  sub.textContent =
+  // topbar nosi kompaktnu meta (osvježeno); puni opis + broj točaka idu u info ploču
+  sub.textContent = generatedLabel(meta.generated_at);
+  const descText =
     `${num(n)} isječaka transkripata kao točke — UMAP projekcija 1024-dimenzionalnih ` +
     `semantičkih embeddinga. Bliske točke govore o sličnim temama. ` +
     `${generatedLabel(meta.generated_at)}`;
@@ -252,7 +263,6 @@ async function init(): Promise<void> {
   }
 
   // ── canvas + overlay slojevi ──
-  const stage = h("div", { class: "map-stage" });
   const canvas = document.createElement("canvas");
   canvas.setAttribute("role", "img");
   canvas.setAttribute("aria-label", `Točkasta mapa ${num(n)} isječaka korpusa, grupirano po semantičkoj sličnosti`);
@@ -265,12 +275,33 @@ async function init(): Promise<void> {
   const ring = h("div", { class: "pick-ring" });
   const hint = h("div", { class: "hint" });
   const snack = h("div", { class: "snack", role: "status" });
-  stage.append(canvas, labelsWrap, ring, hint, snack);
-  card.append(controls, stage, h("p", { class: "map-note" },
-    "Raspored računa UMAP (metrika: kosinusna sličnost) nad bge-m3 embeddinzima — " +
-    "isti vektori koje pretražuje MCP alat search_podcasts. Nazivi tema: HDBSCAN " +
-    "klasteri imenovani Gemini modelom. Osi nemaju mjernu jedinicu; značenje nosi " +
-    "samo blizina točaka."));
+
+  // kontrole (legenda + 2D/3D) plutaju u staklenoj ploči gore-lijevo
+  const panel = h("div", { class: "map-overlay tl" });
+  panel.appendChild(controls);
+
+  // info ploča (opis + metodologija) — collapsible <details>, bez JS-a; otvorena
+  // po defaultu na širokim ekranima, sklopljena na uskima da mapa diše
+  const info = h("details", { class: "map-info" });
+  const summary = h("summary", {});
+  summary.append(
+    h("span", { class: "info-i", "aria-hidden": "true" }, "i"),
+    h("span", {}, "O mapi"),
+    h("span", { class: "chev", "aria-hidden": "true" }, "▾"),
+  );
+  const infoBody = h("div", { class: "map-info-body" });
+  infoBody.append(
+    h("p", { class: "map-desc" }, descText),
+    h("p", { class: "map-note" },
+      "Raspored računa UMAP (metrika: kosinusna sličnost) nad bge-m3 embeddinzima — " +
+      "isti vektori koje pretražuje MCP alat search_podcasts. Nazivi tema: HDBSCAN " +
+      "klasteri imenovani Gemini modelom. Osi nemaju mjernu jedinicu; značenje nosi " +
+      "samo blizina točaka."),
+  );
+  info.append(summary, infoBody);
+  if (window.matchMedia("(min-width: 721px)").matches) info.setAttribute("open", "");
+
+  stage.append(canvas, labelsWrap, ring, hint, snack, panel, info);
 
   const setHint = () => {
     hint.textContent = mode === "2d"
@@ -281,7 +312,7 @@ async function init(): Promise<void> {
 
   const gl = canvas.getContext("webgl2", { antialias: false, alpha: true });
   if (!gl) {
-    fail(card, sub, "WebGL2 nije dostupan u ovom pregledniku — mapa se ne može prikazati.");
+    fail(stage, sub, "WebGL2 nije dostupan u ovom pregledniku — mapa se ne može prikazati.");
     return;
   }
   const prog2d = link(gl, VS2D);

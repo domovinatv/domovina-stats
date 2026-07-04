@@ -1,6 +1,9 @@
 /* map.css — stilovi stranice /map (vektorska mapa). Nadogradnja theme.css-a:
  * kategorička paleta (8 slotova + agregat) validirana dataviz skriptom protiv
- * OBJE površine (#ffffff / #16181c); light i dark su BIRANI koraci. */
+ * OBJE površine (#ffffff / #16181c); light i dark su BIRANI koraci.
+ *
+ * Layout = immersive full-viewport (kao gis.domovina.ai): kompaktni topbar +
+ * mapa od ruba do ruba, kontrole plutaju kao staklene ploče preko mape. */
 
 :root {
   --cat-1: #2a78d6;
@@ -26,14 +29,95 @@
   }
 }
 
-/* ── kontrole: legenda + 2D/3D switch u istom redu ── */
-.map-controls {
-  display: flex; align-items: flex-start; gap: .75rem; margin: 0 0 .9rem;
+/* ── full-viewport immersive shell ── */
+html, body, #app { height: 100%; }
+.map-app {
+  display: flex; flex-direction: column;
+  height: 100dvh; overflow: hidden;
 }
-.map-controls .legend { margin: 0; flex: 1; }
+
+/* ── kompaktni topbar (brand + naslov + meta) ── */
+.map-topbar {
+  flex: none; z-index: 3;
+  display: flex; align-items: center; gap: .55rem;
+  padding: .55rem clamp(.75rem, 2.5vw, 1.4rem);
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--plane) 100%);
+}
+.topbar-back {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.95rem; height: 1.95rem; border-radius: 9px;
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 1.1rem; line-height: 1;
+  border: 1px solid var(--border); background: var(--surface);
+  transition: color .12s ease, border-color .12s ease;
+}
+.topbar-back:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.topbar-brand {
+  flex: none; font-weight: 800; letter-spacing: .04em;
+  font-size: 1rem; color: var(--text-primary);
+}
+.topbar-brand .accent { color: var(--brand-red); letter-spacing: 0; }
+.topbar-sep { flex: none; color: var(--text-muted); }
+.topbar-title {
+  flex: none; margin: 0; font-size: 1rem; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--text-primary);
+}
+.topbar-sub {
+  margin: 0 0 0 auto; padding-left: 1.25rem; text-align: right;
+  color: var(--text-secondary); font-size: .8rem; line-height: 1.3;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+@media (max-width: 720px) { .topbar-sub { display: none; } }
+@media (max-width: 460px) {
+  .topbar-sep, .topbar-brand { display: none; }
+  .topbar-title { font-size: .95rem; }
+}
+
+/* ── stage: mapa od ruba do ruba ── */
+.map-stage {
+  position: relative; flex: 1 1 auto; min-height: 0;
+  background: var(--surface); overflow: hidden;
+}
+.map-stage canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; touch-action: none; cursor: crosshair;
+}
+.map-stage canvas.pt { cursor: pointer; }
+.map-stage canvas.drag { cursor: grabbing; }
+
+.stage-center {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center; padding: 1.5rem;
+}
+
+/* ── plutajuće staklene ploče preko mape ── */
+.map-overlay {
+  position: absolute; z-index: 2;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid var(--border); border-radius: 13px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+}
+@media (prefers-color-scheme: dark) {
+  .map-overlay { box-shadow: 0 8px 28px rgba(0, 0, 0, .45); }
+}
+.map-overlay.tl {
+  left: clamp(.6rem, 2vw, 1rem); top: clamp(.6rem, 2vw, 1rem);
+  max-width: min(32rem, calc(100% - 1.4rem)); padding: .7rem .8rem;
+}
+
+/* ── kontrole: legenda + 2D/3D switch (u ploči, stupčasto) ── */
+.map-controls {
+  display: flex; flex-direction: column; align-items: stretch; gap: .6rem; margin: 0;
+}
+.map-controls .legend { margin: 0; }
 .mode-switch {
-  display: inline-flex; flex: none; border: 1px solid var(--border);
-  border-radius: 999px; overflow: hidden;
+  align-self: flex-start; display: inline-flex; flex: none;
+  border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
 }
 .mode-btn {
   border: none; background: none; color: var(--text-secondary);
@@ -42,6 +126,42 @@
 .mode-btn:hover { color: var(--text-primary); }
 .mode-btn.on { background: var(--grid); color: var(--text-primary); }
 .mode-btn:disabled { opacity: .4; cursor: default; }
+
+/* ── info ploča (opis + metodologija), collapsible bez JS-a ── */
+.map-info {
+  position: absolute; z-index: 2;
+  left: clamp(.6rem, 2vw, 1rem); bottom: clamp(.6rem, 2vw, 1rem);
+  max-width: min(34rem, calc(100% - 1.4rem));
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid var(--border); border-radius: 13px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+}
+@media (prefers-color-scheme: dark) {
+  .map-info { box-shadow: 0 8px 28px rgba(0, 0, 0, .45); }
+}
+.map-info > summary {
+  cursor: pointer; list-style: none; user-select: none;
+  display: flex; align-items: center; gap: .45rem;
+  padding: .5rem .75rem; color: var(--text-secondary);
+  font-weight: 600; font-size: .78rem;
+}
+.map-info > summary::-webkit-details-marker { display: none; }
+.map-info > summary .info-i {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.05rem; height: 1.05rem; border-radius: 50%;
+  border: 1.5px solid currentColor; font-size: .68rem; font-weight: 700;
+}
+.map-info > summary .chev { margin-left: auto; transition: transform .18s ease; opacity: .7; }
+.map-info[open] > summary { border-bottom: 1px solid var(--border); }
+.map-info[open] > summary .chev { transform: rotate(180deg); }
+.map-info-body {
+  padding: .35rem .8rem .75rem;
+  max-height: min(45vh, 24rem); overflow-y: auto;
+}
+.map-desc { margin: .4rem 0 0; color: var(--text-secondary); font-size: .82rem; line-height: 1.5; }
+.map-note { margin: .7rem 0 0; color: var(--text-muted); font-size: .76rem; line-height: 1.45; }
 
 /* ── labele klastera (imena tema; halo za čitljivost preko točaka) ── */
 .clabels { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
@@ -54,17 +174,9 @@
   transition: opacity .18s ease;
 }
 
-/* ── povratak na dashboard ── */
-.backlink {
-  display: inline-block; margin-bottom: 1rem;
-  color: var(--text-secondary); text-decoration: none; font-size: .85rem;
-  font-weight: 600;
-}
-.backlink:hover { color: var(--text-primary); }
-
 /* ── legenda (chip = toggle filter; label je vidljiv — identitet nikad samo bojom) ── */
 .legend {
-  display: flex; flex-wrap: wrap; gap: .4rem .45rem; margin: 0 0 .9rem;
+  display: flex; flex-wrap: wrap; gap: .4rem .45rem; margin: 0;
 }
 .chip {
   display: inline-flex; align-items: center; gap: .4rem;
@@ -82,19 +194,6 @@
 .legend.filtered .chip:not(.on) { opacity: .45; }
 .chip.on { border-color: var(--text-secondary); background: var(--grid); }
 
-/* ── canvas ── */
-.map-stage {
-  position: relative; border-radius: 10px; overflow: hidden;
-  background: var(--surface);
-  height: min(72vh, 46rem); min-height: 22rem;
-}
-.map-stage canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  display: block; touch-action: none; cursor: crosshair;
-}
-.map-stage canvas.pt { cursor: pointer; }
-.map-stage canvas.drag { cursor: grabbing; }
-
 /* prsten oko hoverane točke (marker je HTML — jeftinije od WebGL passa) */
 .pick-ring {
   position: absolute; width: 14px; height: 14px; border-radius: 50%;
@@ -111,7 +210,7 @@
 
 /* ── snackbar (touch: tap na točku → naslov + link) ── */
 .snack {
-  position: absolute; left: .6rem; right: .6rem; bottom: .6rem; z-index: 2;
+  position: absolute; left: .6rem; right: .6rem; bottom: .6rem; z-index: 4;
   display: none; align-items: center; gap: .75rem;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 10px; padding: .6rem .75rem;
@@ -140,5 +239,3 @@
   font: 400 1.15rem/1 var(--font-sans); cursor: pointer; padding: .1rem .35rem;
 }
 .snack-x:hover { color: var(--text-primary); }
-
-.map-note { color: var(--text-muted); font-size: .76rem; margin: .8rem 0 0; }
