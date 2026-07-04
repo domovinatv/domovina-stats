@@ -60,17 +60,25 @@ iz ClickHouse-a MORA dobiti korak u `domovina-rag/scripts/sync-cron.sh` (lokalni
 1. Dodaj korak u `sync-cron.sh` poslije Meili/speakers refresh-a.
 2. Verificiraj: dan poslije, `stats.domovina.ai` pokazuje svjež `generated_at`.
 
-## Razina 2 — vector map (IMPLEMENTIRANO 2026-07-04)
+## Razina 2 — vector map (IMPLEMENTIRANO 2026-07-04; 3D + teme 2026-07-05)
 
-2D UMAP projekcija svih chunk embeddinga (1024-d → 2D) na `/map`. Umjesto
-deck.gl-a iz prvotne skice: **custom WebGL2 point-cloud bez ovisnosti**
-(`src/map.ts` — gl.POINTS, pan/zoom/pinch, hover tooltip preko spatial grida,
-klik → domovina.ai player `/v/{id}/t/{sec}` na točnoj sekundi — miš direktno,
-dodir preko snackbara s naslovom + Otvori/dismiss — filter po kanalu). Težak dio je offline
-(umap-learn u `domovina-rag/.venv-vectormap`, ~2 min na M4, preskače se ako
-nema novih chunkova); output `vector-map.bin` ~1,1 MB + `vector-map.json`
-~290 kB (contract: `02-data-contract.md` § Vector map). Cron korak 7a u
-`domovina-rag/scripts/sync-cron.sh`; deploya ga postojeći korak 7.
+UMAP projekcija svih chunk embeddinga na `/map`, **2D (default) + 3D toggle**.
+Umjesto deck.gl-a iz prvotne skice: **custom WebGL2 point-cloud bez ovisnosti**
+(`src/map.ts` — gl.POINTS, dva programa/VAO-a; 2D: pan/zoom/pinch +
+spatial-grid hover picking; 3D: auto/drag rotacija + brute-force projekcijski
+picking, dubinski fade; klik → domovina.ai player `/v/{id}/t/{sec}` — miš
+direktno, dodir preko snackbara; filter po kanalu). **Imenovani klasteri tema**
+(industrijski standard za razumijevanje semantičke blizine, à la Nomic
+Atlas/datamapplot): HDBSCAN(leaf) na 2D layoutu + LLM imena, kao zoom-ovisan
+HTML overlay s greedy anti-overlapom. Težak dio je offline (umap-learn u
+`domovina-rag/.venv-vectormap`, 2×UMAP ~4 min na M4, preskače se ako nema
+novih chunkova). Contract: `02-data-contract.md` § Vector map. Cron korak 7a
+u `domovina-rag/scripts/sync-cron.sh`; deploya ga postojeći korak 7.
+
+⚠️ LLM imenovanje: Vertex na `domovina-sync-ms` je BILLING_DISABLED, a gemini
+CLI deprecated (IneligibleTierError) — inicijalne labele su ručno kurirane
+(Claude, 2026-07-05), a cron ih **nasljeđuje** preko `eps` otiska klastera dok
+se billing ne vrati.
 
 ## Checklist
 

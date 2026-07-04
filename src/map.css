@@ -26,6 +26,34 @@
   }
 }
 
+/* ── kontrole: legenda + 2D/3D switch u istom redu ── */
+.map-controls {
+  display: flex; align-items: flex-start; gap: .75rem; margin: 0 0 .9rem;
+}
+.map-controls .legend { margin: 0; flex: 1; }
+.mode-switch {
+  display: inline-flex; flex: none; border: 1px solid var(--border);
+  border-radius: 999px; overflow: hidden;
+}
+.mode-btn {
+  border: none; background: none; color: var(--text-secondary);
+  font: 600 .78rem var(--font-sans); padding: .32rem .8rem; cursor: pointer;
+}
+.mode-btn:hover { color: var(--text-primary); }
+.mode-btn.on { background: var(--grid); color: var(--text-primary); }
+.mode-btn:disabled { opacity: .4; cursor: default; }
+
+/* ── labele klastera (imena tema; halo za čitljivost preko točaka) ── */
+.clabels { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.clabel {
+  position: absolute; left: 0; top: 0; opacity: 0;
+  color: var(--text-primary); font-weight: 650; white-space: nowrap;
+  letter-spacing: .01em;
+  text-shadow: 0 0 5px var(--surface), 0 0 5px var(--surface),
+               0 0 3px var(--surface), 0 1px 6px var(--surface);
+  transition: opacity .18s ease;
+}
+
 /* ── povratak na dashboard ── */
 .backlink {
   display: inline-block; margin-bottom: 1rem;

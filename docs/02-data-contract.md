@@ -115,11 +115,20 @@ chunk embeddinga iz LOKALNOG CH-a. Frontend `/map` (src/map.ts, WebGL2) čita:
   `x`, `y` (kvantizirano na [0,65535], očuvan aspect ratio),
   `ep_idx` (indeks u `episodes` iz meta JSON-a), `t_sec` (start isječka,
   za player deep-link `https://domovina.ai/v/{id}/t/{sec}`).
+- **`public/vector-map-3d.bin`** — N × 3 × uint16 LE: `x`, `y`, `z` — zaseban
+  UMAP 3D fit, ISTI poredak točaka kao 2D bin (ep/t se ne ponavlja). Frontend
+  ga lazy-loada tek na 3D toggle.
 - **`public/vector-map.json`** — `{schema_version: 1, generated_at, source,
   points, source_rows, channels: [ime… po chunkovima DESC],
-  episodes: [[youtube_id, channel_idx, title, date]…]}`.
+  episodes: [[youtube_id, channel_idx, title, date]…],
+  clusters: [{label, x, y, x3, y3, z3, n, eps}…]}`.
   `source_rows` je sirovi CH count — producer po njemu preskače UMAP kad nema
   novih chunkova. Boje: prvih 8 `channels` = kategorički slotovi, ostali agregat.
+  `clusters` = HDBSCAN(leaf) sidra tema: kvantizirani centri u 2D i 3D prostoru,
+  `label` = Gemini ime (može biti `""` → frontend skipa), `eps` = top-10
+  youtube_id otisak za nasljeđivanje labela između runova kad LLM nije dostupan.
+- **`public/vector-map-titles.json`** — debug/ručno-imenovanje sidecar: po
+  klasteru top naslovi epizoda (nije ga nužno servirati, ali je bezopasan).
 
 Frontend graceful degradira: ako fajlovi ne postoje (404), `/map` prikaže
 poruku umjesto mape; dashboard `/` ne ovisi o njima.
